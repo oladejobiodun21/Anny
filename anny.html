@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Anny</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+      // Initialize EmailJS with your Public User ID
+      (function () {
+        emailjs.init("3ijyLWGjsj4QnVlp_"); // Replace with your Public User ID
+      })();
+
+      function sendEmail(answer) {
+        const resultDiv = document.getElementById("result");
+        const subject = answer === "yes" ? "Anny said YES!" : "Anny said NO";
+        const message =
+          answer === "yes"
+            ? "Anny has agreed to go out with you! 🎉💖"
+            : "Anny declined the offer, but keep your hopes high. 💔";
+
+        // Update the result message on the webpage
+        if (answer === "yes") {
+          resultDiv.innerHTML =
+            "💖 I’m excited! I can’t wait to spend time with you! 💖";
+        } else {
+          resultDiv.innerHTML =
+            "😔 I respect your decision. Maybe another time. 😔";
+        }
+
+        // EmailJS template parameters
+        const templateParams = {
+          to_name: "Anny",
+          from_name: "Your Name", // Replace with your name
+          message: message,
+        };
+
+        // Send the email using EmailJS
+        emailjs
+          .send("service_1omibww", "template_vslmmtl", templateParams)
+          .then(
+            function (response) {
+              console.log(
+                "Email sent successfully!",
+                response.status,
+                response.text
+              );
+              alert("Notification email sent successfully!");
+            },
+            function (error) {
+              console.error("Failed to send email.", error);
+              alert("Failed to send email. Please try again.");
+            }
+          );
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Georgia", serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+      }
+      .envelope {
+        width: 400px;
+        height: 250px;
+        border: 2px solid #6c757d;
+        border-radius: 15px;
+        padding: 30px;
+        background: white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        position: relative;
+      }
+      h2 {
+        color: #495057;
+      }
+      .buttons {
+        margin-top: 20px;
+      }
+      .button {
+        padding: 10px 25px;
+        margin: 5px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .yes {
+        background-color: #28a745;
+        color: white;
+      }
+      .yes:hover {
+        background-color: #218838;
+      }
+      .no {
+        background-color: #dc3545;
+        color: white;
+      }
+      .no:hover {
+        background-color: #c82333;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 20px;
+        color: #6c757d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="envelope">
+      <h2>Dear Anny,</h2>
+      <p>
+        Whenever you’re free, I’d love the chance to take you out for a special
+        time together. ❤️
+      </p>
+      <p>Can I take you out on a lovely date?</p>
+      <div class="buttons">
+        <button class="button yes" onclick="sendEmail('yes')">Yes</button>
+        <button class="button no" onclick="sendEmail('no')">No</button>
+      </div>
+      <div class="result" id="result"></div>
+    </div>
+  </body>
+</html>
